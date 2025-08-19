@@ -132,5 +132,10 @@
 
     @apply bg-gradient-to-b from-[#CFDAED] via-[#CDE1FD] via-[#C2C8F8] to-[#E9DED9] ;
   }
+
+  .blur-container {
+
+    @apply absolute inset-0 bg-black/90 backdrop-blur-sm;
+  }
 }
 
