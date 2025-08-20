@@ -24,6 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { FIELD_NAMES, FIELD_TYPES } from "@/constants";
+import * as Path from "node:path";
 
 interface Props<T extends FieldValues> {
   schema: ZodType<T>;
