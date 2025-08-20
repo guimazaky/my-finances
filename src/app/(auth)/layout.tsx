@@ -1,6 +1,12 @@
 import React, { ReactNode } from "react";
+import { redirect } from "next/navigation";
+import { auth } from "../../../auth";
 
-const Layout = ({ children }: { children: ReactNode }) => {
+const Layout = async ({ children }: { children: ReactNode }) => {
+  const session = await auth();
+
+  if (session) redirect("/");
+
   return (
     <main className="root-container flex justify-center items-center ">
       <div className="blur-container"></div>

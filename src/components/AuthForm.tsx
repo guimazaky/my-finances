@@ -10,7 +10,6 @@ import {
   UseFormReturn,
 } from "react-hook-form";
 import { z, ZodType } from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -24,7 +23,9 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { FIELD_NAMES, FIELD_TYPES } from "@/constants";
+
 import * as Path from "node:path";
+import { useRouter } from "next/navigation";
 
 interface Props<T extends FieldValues> {
   schema: ZodType<T>;
@@ -39,6 +40,8 @@ function AuthForm<T extends FieldValues>({
   defaultValues,
   onSubmit,
 }: Props<T>) {
+  const router = useRouter();
+
   const isSignIn = type === "SIGN_IN";
 
   const form: UseFormReturn<T> = useForm({
@@ -46,7 +49,19 @@ function AuthForm<T extends FieldValues>({
     defaultValues: defaultValues as DefaultValues<T>,
   });
 
-  const handleSubmit: SubmitHandler<T> = async (data) => {};
+  const handleSubmit: SubmitHandler<T> = async (data) => {
+    const result = await onSubmit(data);
+    if (result.success) {
+      alert(
+        isSignIn
+          ? "Você entrou com sucesso!"
+          : "Você se registrou com sucesso!",
+      );
+      router.push("/");
+    } else {
+      alert("Ocorreu um erro inesperado.");
+    }
+  };
 
   return (
     <div className="flex flex-col items-center gap-8">

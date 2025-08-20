@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ReactNode } from "react";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "../../auth";
 
 export const monaSans = localFont({
   src: [
@@ -33,10 +35,14 @@ export const metadata: Metadata = {
   description: "Finance app",
 };
 
-const RootLayout = ({ children }: { children: ReactNode }) => {
+const RootLayout = async ({ children }: { children: ReactNode }) => {
+  const session = await auth();
+
   return (
     <html lang="en">
-      <body className={`${monaSans.className}  antialiased`}>{children}</body>
+      <SessionProvider session={session}>
+        <body className={`${monaSans.className}  antialiased`}>{children}</body>
+      </SessionProvider>
     </html>
   );
 };
